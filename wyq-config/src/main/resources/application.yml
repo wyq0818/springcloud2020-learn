@@ -1,0 +1,37 @@
+server:
+  port: 9666
+spring:
+  application:
+    name: wyq-config-server
+  #配置文件的存放位置，利用git构建
+  cloud:
+    config:
+      server:
+        git:
+          #仓库地址
+          uri: https://github.com/wyq0818/cloud2020-config-server.git
+          #搜索目录
+          search-paths:
+          - configfile
+      #读取分支
+      label: master
+eureka:
+  instance:
+    instance-id: wyq-config-server
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 60000
+  eureka:
+    enabled: true
+#暴漏bus刷新配置的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "busrefresh"

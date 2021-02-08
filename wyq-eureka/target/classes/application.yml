@@ -1,0 +1,31 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: wyq-eureka
+eureka:
+  instance:
+    instance-id: wyq-eureka-server
+    #访问路径可以显示IP地址
+    prefer-ip-address: true
+    #发送心跳的间隔时间：秒
+    lease-renewal-interval-in-seconds: 1
+    #服务端收到心跳后等待的时间:秒
+    lease-expiration-duration-in-seconds: 2
+  client:
+    #是否将自己注册进eureka-server 默认true
+    register-with-eureka: true
+    #是否从eureka-server抓取自己已有的注册信息，默认true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    fetch-registry: true
+    #注册的服务的地址
+    service-url:
+      #多个注册中心时，相互注册，相互守望
+      defaultZone: http://localhost:${server.port}/eureka
+      #多个注册中心配置
+      #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+  server:
+    #自我保护机制，默认true;开发环境关闭，生产环境要开启，k8环境中建议不要开启，网络稳定环境中也建议不开启
+    #关闭自我保护机制，保证不可用的服务被及时剔除
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 2000
+

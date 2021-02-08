@@ -1,0 +1,31 @@
+server:
+  port: 9655
+spring:
+  application:
+    name: wyq-gateway-server
+  cloud:
+    gateway:
+      #开启从注册中心匹配路由
+      discovery:
+        locator:
+          enabled: true
+eureka:
+  instance:
+    instance-id: wyq-gateway-server
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+ribbon:
+  ConnectTimeout: 60000
+  ReadTimeout: 60000
+  eureka:
+    enabled: true
+#暴漏监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
